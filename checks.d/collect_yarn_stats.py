@@ -45,6 +45,12 @@ class YARNMetrics(AgentCheck):
 		yarn.apps.running.totalMemorySeconds.byAppType	(Desc: SUM by AppType, Tags: apptype:{MR, TEZ, SPARK, etc})
 		yarn.apps.running.totalVCoreSeconds.byQueue		(Desc: SUM by Queue, Tags: queue:{default, production, etc})
 		yarn.apps.running.totalVCoreSeconds.byAppType	(Desc: SUM by AppType, Tags: apptype:{MR, TEZ, SPARK, etc})
+		yarn.cluster.totalGB					(Desc: Total Memory, Tags: none)
+		yarn.cluster.availableGB				(Desc: Total Memory, Tags: none)
+		yarn.cluster.allocatedGB				(Desc: Total Memory, Tags: none)
+		yarn.cluster.totalVirtualCores				(Desc: Total VritualCores, Tags: none)
+		yarn.cluster.availableVirtualCores				(Desc: Available VritualCores, Tags: none)
+		yarn.cluster.allocatedVirtualCores				(Desc: Allocated VritualCores, Tags: none)
 
 	"""
 	
