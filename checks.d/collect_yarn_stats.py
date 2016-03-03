@@ -294,6 +294,21 @@ class YARNMetrics(AgentCheck):
 			sorted_by_apptype = sorted(apptypes_zipped_list, key=lambda tup: tup[0])
 			self.metricsbycontext('apptype', sorted_by_apptype, rmhost)			
 
+			#
+			# cluster info
+			#
+			cluster_metric_url = "http://" + resourcemanager_uri + "/ws/v1/cluster/metrics"	 
+			cluster_metric_resp = urllib2.urlopen(cluster_metric_url)
+			cluster_metric_json_obj = json.load(cluster_metric_resp)
+			if cluster_metric_json_obj['clusterMetrics'] is not None:
+				metric = cluster_metric_json_obj['clusterMetrics']
+				self.setmetric('yarn.cluster.totalMB', metric['totalMB']/1000, [], rmhost)
+				self.setmetric('yarn.cluster.availableGB', metric['availableMB']/1000, [], rmhost)
+				self.setmetric('yarn.cluster.allocatedGB', metric['allocatedMB']/1000, [], rmhost)
+				self.setmetric('yarn.cluster.totalVirtualCores', metric['totalVirtualCores'], [], rmhost)
+				self.setmetric('yarn.cluster.availableVirtualCores', metric['availableVirtualCores'], [], rmhost)
+				self.setmetric('yarn.cluster.allocatedVirtualCores', metric['allocatedVirtualCores'], [], rmhost)
+
 		except HTTPError, e:
 			err_msg = 'HTTPError %s Returned From \'%s\'' % (e.code, rmhost)
 			self.yarn_error_event('HTTPError', err_msg)
